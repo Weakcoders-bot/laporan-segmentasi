@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Laporan: Segmentasi Citra — Thresholding</title>
+  <style>
+    body {font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; line-height:1.6; max-width:900px; margin:36px auto; padding:0 18px; color:#111;}
+    header {border-bottom:1px solid #eee; padding-bottom:12px; margin-bottom:20px;}
+    h1{margin:6px 0}
+    pre{background:#f6f8fa;padding:12px;border-radius:6px;overflow:auto}
+    code{font-family:monospace;background:#f3f4f6;padding:2px 6px;border-radius:4px}
+    .note{background:#fff7cc;padding:10px;border-left:4px solid #f6c84c;margin:12px 0}
+    footer{margin-top:36px;color:#666;font-size:14px;border-top:1px solid #eee;padding-top:12px}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Segmentasi Citra — Thresholding</h1>
+  <p>Ringkasan materi dan contoh implementasi (Otsu &amp; Adaptive Thresholding).</p>
+  <p><em>Sumber:</em> Slide kuliah "Pengolahan Citra Digital - Segmentasi Citra - Thresholding". fileciteturn0file0</p>
+</header>
+
+<section>
+  <h2>Pendahuluan</h2>
+  <p>Segmentasi adalah proses memisahkan citra menjadi region bermakna. Thresholding memisahkan piksel berdasarkan intensitasnya — salah satu metode paling sederhana dan sering dipakai sebagai langkah awal.</p>
+</section>
+
+<section>
+  <h2>Metode</h2>
+  <ul>
+    <li><strong>Global thresholding:</strong> satu nilai ambang (T) untuk seluruh citra.</li>
+    <li><strong>Otsu's method:</strong> otomatis mencari T yang memaksimalkan variansi antar-kelas.</li>
+    <li><strong>Adaptive thresholding:</strong> ambang lokal yang dihitung dari neighborhood setiap piksel (Mean / Gaussian).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Contoh kode (Python, OpenCV)</h2>
+  <p>File contoh juga tersedia: <code>segmentasi.py</code></p>
+  <pre><code># Contoh sederhana: Otsu &amp; Adaptive Thresholding
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+
+image = cv2.imread('input.jpg', cv2.IMREAD_GRAYSCALE)
+if image is None:
+    raise SystemExit('Letakkan file input.jpg di folder yang sama.')
+
+# 1) Otsu
+_, otsu = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+print('Threshold Otsu:', _)
+
+# 2) Adaptive (Gaussian)
+adaptive = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                 cv2.THRESH_BINARY, 11, 2)
+
+# 3) Tampilkan
+plt.figure(figsize=(10,4))
+plt.subplot(1,3,1); plt.title('Original'); plt.imshow(image, cmap='gray'); plt.axis('off')
+plt.subplot(1,3,2); plt.title(f'Otsu (T={_})'); plt.imshow(otsu, cmap='gray'); plt.axis('off')
+plt.subplot(1,3,3); plt.title('Adaptive Gaussian'); plt.imshow(adaptive, cmap='gray'); plt.axis('off')
+plt.tight_layout(); plt.show()</code></pre>
+  <div class="note">Tips: untuk dokumen/foto dengan pencahayaan tidak merata gunakan <strong>Adaptive Thresholding</strong>. Untuk citra dengan histogram bimodal Otsu seringkali bekerja sangat baik.</div>
+</section>
+
+<section>
+  <h2>Workflow praktis</h2>
+  <ol>
+    <li>Preprocessing: konversi ke grayscale, smoothing (GaussianBlur) untuk mengurangi noise.</li>
+    <li>Thresholding: pilih global/Otsu/adaptive sesuai karakter citra.</li>
+    <li>Morphology: bersihkan hasil (opening/closing) untuk menghapus noise kecil atau mengisi lubang.</li>
+    <li>Evaluasi: inspeksi visual dan/atau bandingkan dengan ground truth.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>File dalam paket</h2>
+  <ul>
+    <li><code>index.html</code> — halaman laporan (ini)</li>
+    <li><code>segmentasi.py</code> — kode Python contoh</li>
+    <li><code>README.md</code> — panduan deploy ke GitHub Pages</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Generated for: Echo (permintaan pembuatan laporan &amp; siap dipublish).</p>
+</footer>
+</body>
+</html>
