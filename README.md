@@ -1,46 +1,36 @@
-# Laporan Segmentasi Citra — Thresholding
+Laporan Praktikum Segmentasi Citra (Thresholding)
 
-Berisi:
-- `index.html` — Halaman laporan siap dipublish (GitHub Pages).
-- `segmentasi.py` — Contoh kode Python (OpenCV) untuk Thresholding (Otsu & Adaptive).
-- `assets/` — tempat untuk menaruh gambar hasil eksperimen (tidak disertakan).
-- `README.md` — (this file) petunjuk deploy.
+Laporan ini merupakan hasil praktikum mata kuliah Pengolahan Citra Digital dengan topik  
+Segmentasi Citra Menggunakan Metode Thresholding (Otsu dan Adaptive Thresholding).
+Tujuan dari praktikum ini adalah memahami konsep segmentasi citra, menerapkan dua metode thresholding yang berbeda, dan menganalisis hasilnya pada berbagai kondisi pencahayaan.
 
-Sumber materi: Slide kuliah "Pengolahan Citra Digital - Segmentasi Citra - Thresholding". fileciteturn0file0
+---
 
-## Cara publish ke GitHub Pages (singkat)
-1. Buat repository baru di GitHub (mis. `laporan-segmentasi`).
-2. Clone ke lokal:
-   ```
-   git clone https://github.com/<your-username>/laporan-segmentasi.git
-   cd laporan-segmentasi
-   ```
-3. Salin seluruh isi folder ini ke dalam repo lokal.
-4. Commit & push:
-   ```
-   git add .
-   git commit -m "Add laporan segmentasi thresholding"
-   git push origin main
-   ```
-5. Aktifkan GitHub Pages:
-   - Buka Settings → Pages → Source: `main` branch, folder: `/ (root)` → Save.
-   - Setelah beberapa menit, situs akan tersedia di:
-     `https://<your-username>.github.io/laporan-segmentasi/`
-6. Ganti `<your-username>` dan nama repo pada URL di atas — itulah link yang akan mengarah langsung ke laporan.
+Struktur Folder
+| Nama File | Deskripsi |
+|------------|------------|
+| `index.html`   | Laporan utama yang dapat dibuka langsung di browser atau dipublikasikan ke GitHub Pages. |
+| `segmentasi.py`| Kode Python untuk implementasi metode Otsu dan Adaptive Thresholding menggunakan OpenCV. |
+| `.nojekyll`    | File kosong agar GitHub Pages dapat menampilkan file HTML tanpa diproses oleh Jekyll. |
+| `README.md`    | Petunjuk lengkap penggunaan dan publikasi laporan ini. |
 
-## Cara otomatis (bash) — jika ingin:
-Pastikan git sudah terkonfigurasi, lalu jalankan (ubah `<your-username>` & `<repo>`):
-```bash
-REPO="laporan-segmentasi"
-USER="<your-username>"
-git init
-git remote add origin https://github.com/$USER/$REPO.git
-(update build trigger)
+---
 
-git add .
-git commit -m "Initial commit: laporan segmentasi"
-git branch -M main
-git push -u origin main
-```
+Segmentasi citraadalah proses pemisahan citra menjadi beberapa bagian (region) berdasarkan karakteristik tertentu seperti intensitas atau warna.  
+Thresholding merupakan teknik segmentasi paling sederhana, di mana piksel citra dibandingkan dengan nilai ambang tertentu untuk menentukan apakah piksel termasuk objek atau latar belakang.
 
-Kalau mau saya bantu generate preview atau mengubah isi laporan, bilang saja 😉
+Metode Otsu
+Menentukan nilai ambang otomatis dengan memaksimalkan variansi antar-kelas (antara objek dan latar). Cocok untuk citra dengan histogram bimodal dan pencahayaan seragam.
+
+Metode Adaptive Thresholding
+Menentukan ambang secara lokal berdasarkan area kecil di sekitar tiap piksel (menggunakan rata-rata atau Gaussian). Lebih efektif pada citra dengan pencahayaan tidak merata.
+
+---
+
+Cara Menjalankan Program di Jupyter Notebook
+Persiapan Awal
+Pastikan Python dan Jupyter Notebook sudah terpasang di perangkat kamu.  
+Instal library yang dibutuhkan dengan menjalankan perintah berikut di **cell Jupyter Notebook**:
+
+```python
+pip install opencv-python-headless numpy matplotlib
