@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="id">
 <head>
@@ -30,12 +29,13 @@
     .placeholder{color:var(--muted);font-style:italic}
     table.specs{width:100%;border-collapse:collapse}
     table.specs td, table.specs th{padding:6px;border:1px solid #f1f1f1}
-    .figure{border:1px dashed #eee;padding:18px;text-align:center;color:var(--muted);margin:12px 0;border-radius:6px}
+    .figure{border:1px dashed #eee;padding:18px;text-align:center;color:var(--muted);margin:12px 0;border-radius:6px;background:#fcfcfc}
+    img{border-radius:8px;box-shadow:0 0 6px rgba(0,0,0,0.15);}
   </style>
 </head>
 <body>
   <header class="cover">
-    <div class="univ">[UNIVERSITAS PAMULANG]</div>
+    <div class="univ">[Nama Universitas]</div>
     <h1 class="title">LAPORAN PRAKTIKUM<br>SEGMENTASI CITRA<br><small style="font-size:14px">Metode Thresholding: Otsu & Adaptive Thresholding</small></h1>
     <table class="meta" style="margin:0 auto">
       <tr><td><strong>Nama</strong></td><td class="placeholder">[Thio Mandala Putra]</td></tr>
@@ -84,7 +84,7 @@
     <ul>
       <li>Bahasa pemrograman Python 3.x</li>
       <li>Perpustakaan: OpenCV, NumPy, Matplotlib</li>
-      <li>Editor/IDE (mis. VSCode)</li>
+      <li>Editor/IDE (mis. VSCode, Jupyter Notebook)</li>
       <li>Dataset: citra uji (format JPG/PNG)</li>
     </ul>
 
@@ -97,12 +97,13 @@
     </ol>
 
     <div class="figure">
-  <h4>Gambar 2. Hasil Segmentasi Citra</h4>
-  <img src="output_otsu.png" alt="Hasil Otsu Thresholding" width="250" style="margin:5px;">
-  <img src="output_adaptive.png" alt="Hasil Adaptive Thresholding" width="250" style="margin:5px;">
-  <img src="output_cleaned.png" alt="Hasil Morphology Cleaning" width="250" style="margin:5px;">
-  <p><em>Perbandingan hasil metode Otsu, Adaptive, dan hasil akhir setelah morfologi.</em></p>
-</div>
+      <h4>Gambar 2. Hasil Segmentasi Citra (PNG)</h4>
+      <img src="output_otsu.png" alt="Hasil Otsu Thresholding" width="250" style="margin:5px;">
+      <img src="output_adaptive.png" alt="Hasil Adaptive Thresholding" width="250" style="margin:5px;">
+      <img src="output_cleaned.png" alt="Hasil Morphology Cleaning" width="250" style="margin:5px;">
+      <p><em>Perbandingan hasil metode Otsu, Adaptive, dan hasil akhir setelah morfologi.</em></p>
+    </div>
+  </section>
 
   <section id="bab4">
     <h2>BAB IV — Hasil dan Pembahasan</h2>
@@ -110,16 +111,24 @@
     <ol>
       <li>Deskripsikan karakter citra (kontras, adanya noise, pencahayaan)</li>
       <li>Sertakan nilai threshold Otsu yang ditemukan</li>
-      <li>Bandingkan hasil Otsu dan Adaptive: where Otsu succeeds/fails</li>
+      <li>Bandingkan hasil Otsu dan Adaptive: kapan Otsu lebih unggul dan kapan Adaptive lebih stabil</li>
     </ol>
-    <p class="lead">Contoh analisis singkat: Pada citra dengan histogram bimodal dan pencahayaan seragam, Otsu mampu memisahkan objek dengan baik. Namun pada citra dengan pencahayaan tidak merata, Adaptive Thresholding (Gaussian) menunjukkan hasil yang lebih konsisten dan sedikit lebih tahan terhadap bayangan.</p>
-    <div class="figure">Gambar 2. (Tempat untuk menaruh hasil output: output_otsu.png / output_adaptive.png)</div>
+
+    <div class="figure">
+      <h4>Gambar 3. Hasil Segmentasi (File PNG)</h4>
+      <img src="output_otsu.png" alt="Hasil Otsu Thresholding" width="260" style="margin:6px;">
+      <img src="output_adaptive.png" alt="Hasil Adaptive Thresholding" width="260" style="margin:6px;">
+      <img src="output_cleaned.png" alt="Hasil Morphology Cleaning" width="260" style="margin:6px;">
+      <p><em>Ketiga gambar di atas menunjukkan hasil segmentasi citra menggunakan metode Otsu, Adaptive, dan hasil akhir setelah morfologi cleaning.</em></p>
+    </div>
+
+    <p class="lead">Contoh analisis singkat: Pada citra dengan histogram bimodal dan pencahayaan seragam, metode Otsu mampu memisahkan objek dengan baik. Namun pada citra dengan pencahayaan tidak merata, metode Adaptive Thresholding (Gaussian) memberikan hasil yang lebih konsisten dan tahan terhadap bayangan.</p>
   </section>
 
   <section id="bab5">
     <h2>BAB V — Kesimpulan dan Saran</h2>
-    <p class="lead"><strong>Kesimpulan.</strong> Thresholding adalah metode sederhana namun efektif untuk segmentasi dasar. Pemilihan metode (Otsu vs Adaptive) harus disesuaikan dengan karakter citra; Otsu baik untuk kondisi seragam, Adaptive lebih cocok untuk kondisi pencahayaan variatif.</p>
-    <p class="lead"><strong>Saran.</strong> Untuk tugas lanjutan, kombinasikan thresholding dengan teknik lain (mis. edge detection, clustering, atau model berbasis pembelajaran) dan lakukan evaluasi kuantitatif menggunakan metrik (IoU, F1-score) terhadap ground truth.</p>
+    <p class="lead"><strong>Kesimpulan.</strong> Thresholding adalah metode sederhana namun efektif untuk segmentasi dasar. Pemilihan metode (Otsu vs Adaptive) harus disesuaikan dengan karakter citra; Otsu baik untuk kondisi seragam, sementara Adaptive lebih cocok untuk pencahayaan yang tidak merata.</p>
+    <p class="lead"><strong>Saran.</strong> Untuk tugas lanjutan, kombinasikan thresholding dengan teknik lain seperti edge detection, clustering, atau model pembelajaran mesin, lalu lakukan evaluasi kuantitatif menggunakan metrik (IoU, F1-score) terhadap ground truth.</p>
   </section>
 
   <section id="lampiran">
@@ -152,28 +161,11 @@ def run(input_path='input.jpg', out_dir='outputs'):
                                      cv2.THRESH_BINARY, 11, 2)
     cv2.imwrite(str(out / 'output_adaptive.png'), adaptive)
 
-    # Morphology cleanup (example)
+    # Morphology cleanup
     kernel = np.ones((3,3), np.uint8)
     cleaned = cv2.morphologyEx(adaptive, cv2.MORPH_CLOSE, kernel)
     cv2.imwrite(str(out / 'output_cleaned.png'), cleaned)
 
     print('Saved outputs in', out)
     plt.figure(figsize=(10,4))
-    plt.subplot(1,4,1); plt.imshow(img, cmap='gray'); plt.title('Original'); plt.axis('off')
-    plt.subplot(1,4,2); plt.imshow(otsu, cmap='gray'); plt.title('Otsu'); plt.axis('off')
-    plt.subplot(1,4,3); plt.imshow(adaptive, cmap='gray'); plt.title('Adaptive'); plt.axis('off')
-    plt.subplot(1,4,4); plt.imshow(cleaned, cmap='gray'); plt.title('Cleaned'); plt.axis('off')
-    plt.tight_layout(); plt.show()
-
-if __name__ == '__main__':
-    import sys
-    inp = sys.argv[1] if len(sys.argv) > 1 else 'input.jpg'
-    run(inp)</code></pre>
-    <p class="placeholder">Catatan: Masukkan identitas pada halaman sampul sebelum mencetak atau mem-publish laporan.</p>
-  </section>
-
-  <footer>
-    Generated report template — sesuaikan identitas dan citra uji. Untuk bantuan publikasi ke GitHub Pages, hubungi pembuat laporan (Echo).
-  </footer>
-</body>
-</html>
+    plt.subplot(1,4,1); plt.imshow(img, cmap='
