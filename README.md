@@ -35,6 +35,8 @@ REPO="laporan-segmentasi"
 USER="<your-username>"
 git init
 git remote add origin https://github.com/$USER/$REPO.git
+(update build trigger)
+
 git add .
 git commit -m "Initial commit: laporan segmentasi"
 git branch -M main
